@@ -1,0 +1,6 @@
+//product action types
+
+export const REQUESTING_PRODUCTS='REQUESTING_PRODUCTS'
+export const PRODUCTS_FOUND='PRODUCTS_FOUND'
+export const PRODUCTS_NOT_FOUND='PRODUCTS_NOT_FOUND'
+
