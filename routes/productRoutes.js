@@ -7,10 +7,10 @@ import { getProducts,
     createProduct,
     updateProduct,
     createProductReview,
-    getTopProducts} from "../controllers/productController"
+    getTopProducts} from "../controllers/productController.js"
 
-import isAuth from "../middlewares/isAuth"
-import isAdmin from "../middlewares/isAdmin"
+import isAuth from "../middlewares/isAuth.js"
+import isAdmin from "../middlewares/isAdmin.js"
 
 router.get('/',getProducts)
 router.post('/',isAuth,isAdmin,createProduct)
@@ -24,4 +24,4 @@ router.delete('/:id',isAuth,isAdmin,deleteProduct)
 router.put('/:id',isAuth,isAdmin,updateProduct)
 
 
-module.exports = router
+export default router

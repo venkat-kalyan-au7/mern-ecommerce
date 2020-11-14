@@ -9,10 +9,11 @@ import {userLogin,
     getUsers,
     deleteUser,
     getUserById,
-    updateUserByAdmin} from '../controllers/userController'
+    updateUserByAdmin} from '../controllers/userController.js'
 
-import isAuth from "../middlewares/isAuth"
-import isAdmin from "../middlewares/isAdmin"
+import isAuth from "../middlewares/isAuth.js"
+import isAdmin from "../middlewares/isAdmin.js"
+
 
 router.post('/',registerUser)
 router.post('/login',userLogin)
@@ -26,4 +27,4 @@ router.put('/:id',isAdmin,updateUserByAdmin)
 router.delete('/:id',isAdmin,deleteUser)
 
 
-module.exports = router
+export default router

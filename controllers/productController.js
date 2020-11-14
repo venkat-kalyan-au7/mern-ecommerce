@@ -1,5 +1,5 @@
 import asyncHandler from 'express-async-handler'
-import Product from '../models/products'
+import Product from '../models/products.js'
 
 
 
@@ -43,7 +43,7 @@ const getProducts = asyncHandler(async (req, res) => {
       .limit(pageSize)
       .skip(pageSize * (page - 1))
   
-    res.json({ products, page, pages: Math.ceil(count / pageSize) })
+    res.json( products )
   })
 
 

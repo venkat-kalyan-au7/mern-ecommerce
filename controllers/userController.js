@@ -1,6 +1,6 @@
 import asyncHandler from 'express-async-handler'
-import User from "../models/users"
-import generateToken from '../helpers/token'
+import User from "../models/users.js"
+import generateToken from '../helpers/token.js'
 
 
   
@@ -11,8 +11,10 @@ import generateToken from '../helpers/token'
     const userExists = await User.findOne({ email })
   
     if (userExists) {
-      res.status(400)
-      throw new Error('User already exists')
+      res.status(400).json({
+        message:"user already exists"
+      })
+      
     }
   
     const user = await User.create({

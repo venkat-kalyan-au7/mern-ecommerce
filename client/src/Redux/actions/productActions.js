@@ -1,27 +1,52 @@
-import {PRODUCTS_FOUND,PRODUCTS_NOT_FOUND,REQUESTING_PRODUCTS} from "./types"
+import axios from 'axios'
+import {
+  PRODUCT_LIST_REQUEST,
+  PRODUCT_LIST_SUCCESS,
+  PRODUCT_LIST_FAIL,
+  SINGLE_PRODUCT_REQUEST,
+  SINGLE_PRODUCT_SUCCESS,
+  SINGLE_PRODUCT_FAIL
+} from "./types.js"
 
-import axios from "axios"
+export const listProducts = () => async (dispatch) => {
+  try {
+    dispatch({ type: PRODUCT_LIST_REQUEST })
 
-const GetProducts=()=>async(dispatch)=>{
-    try{
-        dispatch({type:REQUESTING_PRODUCTS})
+    const { data } = await axios.get('/api/products')
 
-        const {data}= await axios.get('/api/products')
-
-        dispatch({type:PRODUCTS_FOUND,
-                payload:data})
-        
-        
-    }
-    catch(error){
-        dispatch({
-            type:PRODUCTS_NOT_FOUND,
-            payload:error.response && error.response.data.message ? error.response.data.message:error.message
-        })
-    }
+    dispatch({
+      type: PRODUCT_LIST_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
 }
 
 
-export {
-    GetProducts
+export const singleProductDetails = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: SINGLE_PRODUCT_REQUEST })
+
+    const { data } = await axios.get(`/api/products/${id}`)
+
+    dispatch({
+      type:SINGLE_PRODUCT_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: SINGLE_PRODUCT_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
 }

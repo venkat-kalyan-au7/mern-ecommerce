@@ -1,30 +1,42 @@
 import express from "express"
 import morgan from "morgan"
+import path from "path"
+import cors from "cors"
 
 const app = express()
 
 
 
-//custom middlewares
-import notFound from "./errors/notFound"
-import errorHandler from "./errors/errorHandler"
+//custom middleware
+import {errorHandler,notFound} from "./errors/errorHandler.js"
 
 //routes
-import userRoutes from './routes/userRoutes'
-import productRoutes from './routes/productRoutes'
-import uploadRoutes from './routes/multerRoute'
+import userRoutes from './routes/userRoutes.js'
+import productRoutes from './routes/productRoutes.js'
+import uploadRoutes from './routes/multerRoute.js'
 
 
-app.get('/',(req,res)=>{
-    res.send('server responded')
-})
+
+
+if(process.env.NODE_ENV == "production"){
+    app.use(express.static('client/build'))
+    app.get("*", (req, res) => {
+        res.sendFile(path.resolve(__dirname, "client", "build", 'index.html'))
+    })
+}
+
+
+  
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 app.use(morgan('tiny'))
+app.use(cors())
 
-app.use(notFound)
+
+
 app.use(errorHandler)
+
 
 
 app.use('/api/users', userRoutes)
@@ -33,5 +45,5 @@ app.use('/api/upload', uploadRoutes)
 
 
 
-module.exports =app
+export default app
 
